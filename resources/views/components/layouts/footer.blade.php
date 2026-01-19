@@ -16,8 +16,8 @@
         <div>
             <h4 class="text-white font-bold mb-4">Support</h4>
             <ul class="space-y-2 text-sm">
-                <li><a href="#" class="hover:text-white transition">Help Center</a></li>
-                <li><a href="#" class="hover:text-white transition">Terms of Service</a></li>
+                <li><a href="{{ route('faq') }}" class="hover:text-white transition">Help Center</a></li>
+                <li><a href="{{ route('terms') }}" class="hover:text-white transition">Terms of Service</a></li>
                 <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
             </ul>
         </div>
