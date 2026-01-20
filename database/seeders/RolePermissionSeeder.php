@@ -7,7 +7,6 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\PermissionRegistrar;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use App\Models\User;
 
 class RolePermissionSeeder extends Seeder
 {
@@ -54,23 +53,5 @@ class RolePermissionSeeder extends Seeder
             'view bookings',
             'create bookings'
         ]);
-
-        // ========== BUAT USER DEMO ==========
-
-        // Admin User
-        $adminUser = User::create([
-            'name' => 'I am Admin',
-            'email' => 'admin@example.com',
-            'password' => bcrypt('admin12345')
-        ]);
-        $adminUser->assignRole('admin');
-
-        // Regular User
-        $regularUser = User::create([
-            'name' => 'Regular User',
-            'email' => 'user@example.com',
-            'password' => bcrypt('user12345')
-        ]);
-        $regularUser->assignRole('user');
     }
 }
