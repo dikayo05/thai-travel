@@ -17,6 +17,10 @@ Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::get('/faq', [FaqController::class, 'index'])->name('faq');
 Route::get('/terms', [TermsController::class, 'index'])->name('terms');
 
+// Search Routes (Public)
+Route::get('/search/cars', [HomeController::class, 'searchCars'])->name('search.cars');
+Route::get('/search/tours', [HomeController::class, 'searchTours'])->name('search.tours');
+
 // User Routes
 Route::middleware('auth', 'role:user')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

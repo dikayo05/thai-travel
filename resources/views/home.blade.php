@@ -38,25 +38,26 @@
                     x-transition:enter="transition ease-out duration-300"
                     x-transition:enter-start="opacity-0 transform scale-95"
                     x-transition:enter-end="opacity-100 transform scale-100">
-                    <form class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <form method="GET" action="{{ route('search.cars') }}"
+                        class="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <div class="md:col-span-1">
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Service
                                 Type</label>
-                            <select
+                            <select name="service_type"
                                 class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:ring-primary focus:border-primary">
-                                <option>Airport Transfer</option>
-                                <option>City Rental (Hourly)</option>
+                                <option value="airport_transfer">Airport Transfer</option>
+                                <option value="city_rental">City Rental (Hourly)</option>
                             </select>
                         </div>
                         <div class="md:col-span-1">
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Pick-up
                                 Location</label>
-                            <input type="text" placeholder="e.g. Suvarnabhumi Airport"
+                            <input type="text" name="pickup_location" placeholder="e.g. Suvarnabhumi Airport"
                                 class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:ring-primary focus:border-primary">
                         </div>
                         <div class="md:col-span-1">
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Date</label>
-                            <input type="date"
+                            <input type="date" name="service_date" min="{{ date('Y-m-d') }}"
                                 class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:ring-primary focus:border-primary">
                         </div>
                         <div class="md:col-span-1 flex items-end">
@@ -70,22 +71,24 @@
 
                 <div x-show="activeTab === 'tours'" x-cloak class="p-6 md:p-8"
                     x-transition:enter="transition ease-out duration-300">
-                    <form class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <form method="GET" action="{{ route('search.tours') }}"
+                        class="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <div class="md:col-span-1">
                             <label
                                 class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Destination</label>
-                            <select
+                            <select name="destination"
                                 class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:ring-primary focus:border-primary">
-                                <option>Bangkok</option>
-                                <option>Phuket</option>
-                                <option>Chiang Mai</option>
-                                <option>Pattaya</option>
+                                <option value="bangkok">Bangkok</option>
+                                <option value="phuket">Phuket</option>
+                                <option value="chiang_mai">Chiang Mai</option>
+                                <option value="pattaya">Pattaya</option>
                             </select>
                         </div>
                         <div class="md:col-span-2">
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Experience
                                 Type</label>
-                            <input type="text" placeholder="Temples, Food, Elephant Sanctuary..."
+                            <input type="text" name="experience_type"
+                                placeholder="Temples, Food, Elephant Sanctuary..."
                                 class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:ring-primary focus:border-primary">
                         </div>
                         <div class="md:col-span-1 flex items-end">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class HomeController extends Controller
 {
@@ -12,6 +13,48 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+
+    /**
+     * Search for cars based on criteria
+     */
+    public function searchCars(Request $request)
+    {
+        $serviceType = $request->input('service_type', 'airport_transfer');
+        $pickupLocation = $request->input('pickup_location', '');
+        $serviceDate = $request->input('service_date', date('Y-m-d'));
+
+        // Get all active cars from database
+        $cars = Product::cars()->orderBy('is_featured', 'desc')->get();
+
+        return view('search.cars', compact('cars', 'serviceType', 'pickupLocation', 'serviceDate'));
+    }
+
+    /**
+     * Search for tours based on criteria
+     */
+    public function searchTours(Request $request)
+    {
+        $destination = $request->input('destination', 'bangkok');
+        $experienceType = $request->input('experience_type', '');
+
+        // Get tours from database with optional filtering
+        $query = Product::tours()->orderBy('is_featured', 'desc');
+
+        if ($destination && $destination !== 'all') {
+            $query->where('destination', 'like', '%' . ucfirst(str_replace('_', ' ', $destination)) . '%');
+        }
+
+        if ($experienceType) {
+            $query->where(function ($q) use ($experienceType) {
+                $q->where('name', 'like', '%' . $experienceType . '%')
+                    ->orWhere('description', 'like', '%' . $experienceType . '%');
+            });
+        }
+
+        $tours = $query->get();
+
+        return view('search.tours', compact('tours', 'destination', 'experienceType'));
     }
 
     /**

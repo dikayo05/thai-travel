@@ -53,6 +53,14 @@ class Booking extends Model
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Relasi ke Product
+     */
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
     // Jika nanti ada tabel Products terpisah (Polymorphic relationship opsional)
     // public function product() { ... }
 
