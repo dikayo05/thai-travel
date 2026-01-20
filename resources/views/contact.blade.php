@@ -67,7 +67,7 @@
                             </div>
                             <div>
                                 <h3 class="text-lg font-medium text-gray-900 dark:text-white">Email</h3>
-                                <p class="mt-1 text-gray-600 dark:text-gray-400">support@siamtravel.com</p>
+                                <p class="mt-1 text-gray-600 dark:text-gray-400">support@thaitravel.com</p>
                             </div>
                         </div>
                     </div>

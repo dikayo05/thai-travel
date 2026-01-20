@@ -215,7 +215,7 @@
     <section class="py-16 bg-gradient-to-r from-teal-600 to-teal-800 text-white">
         <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
             <div class="md:w-1/2 mb-8 md:mb-0">
-                <h2 class="text-3xl font-bold mb-4">Join SiamTravel Club</h2>
+                <h2 class="text-3xl font-bold mb-4">Join thaiTravel Club</h2>
                 <p class="text-teal-100 text-lg mb-6">Create an account today and get <span
                         class="font-bold text-yellow-400">300 Points</span> instantly! Collect points on every ride and
                     unlock exclusive discounts.</p>

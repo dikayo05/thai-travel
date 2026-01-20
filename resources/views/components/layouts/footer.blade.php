@@ -1,7 +1,7 @@
 <footer class="bg-gray-900 text-gray-300 py-12 border-t border-gray-800">
     <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
         <div>
-            <span class="text-2xl font-bold text-white mb-4 block">Siam<span class="text-yellow-500">Travel</span></span>
+            <span class="text-2xl font-bold text-white mb-4 block">thai<span class="text-yellow-500">Travel</span></span>
             <p class="text-sm text-gray-400">Providing seamless transportation and unforgettable tour experiences across
                 Thailand since 2025.</p>
         </div>
@@ -24,13 +24,13 @@
         <div>
             <h4 class="text-white font-bold mb-4">Contact Us</h4>
             <ul class="space-y-2 text-sm">
-                <li>LINE: @siamtravel</li>
+                <li>LINE: @thaitravel</li>
                 <li>WhatsApp: +66 81 234 5678</li>
-                <li>Email: support@siamtravel.com</li>
+                <li>Email: support@thaitravel.com</li>
             </ul>
         </div>
     </div>
     <div class="border-t border-gray-800 mt-12 pt-8 text-center text-sm text-gray-500">
-        &copy; 2026 Siam Travel Co., Ltd. All rights reserved.
+        &copy; 2026 thai Travel Co., Ltd. All rights reserved.
     </div>
 </footer>

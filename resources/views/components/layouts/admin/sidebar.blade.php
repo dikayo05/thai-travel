@@ -7,7 +7,7 @@
     class="fixed inset-y-0 left-0 z-30 w-64 overflow-y-auto transition-transform duration-300 transform bg-gray-900 text-white lg:translate-x-0 lg:static lg:inset-0">
 
     <div class="flex items-center justify-center h-16 bg-gray-800 border-b border-gray-700">
-        <span class="text-2xl font-bold text-white">Siam<span class="text-yellow-500">Admin</span></span>
+        <span class="text-2xl font-bold text-white">thai<span class="text-yellow-500">Admin</span></span>
     </div>
 
     <nav class="mt-5 px-4 space-y-2">
