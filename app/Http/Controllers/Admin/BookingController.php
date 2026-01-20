@@ -15,12 +15,12 @@ class BookingController extends Controller
     {
         $query = Booking::query()->with('user'); // Eager load user untuk performa
 
-        // 1. Filter by Status
+        // Filter by Status
         if ($request->has('status') && $request->status != '') {
             $query->where('status', $request->status);
         }
 
-        // 2. Search by Booking Code / User Name
+        // Search by Booking Code / User Name
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
@@ -58,7 +58,7 @@ class BookingController extends Controller
      */
     public function show(string $id)
     {
-        $booking = Booking::with(['user', 'payment'])->findOrFail($id);
+        $booking = Booking::with(['user'])->findOrFail($id);
         return view('admin.bookings.show', compact('booking'));
     }
 
