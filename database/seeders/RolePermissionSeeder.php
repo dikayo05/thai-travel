@@ -51,8 +51,8 @@ class RolePermissionSeeder extends Seeder
         // Role: User (basic)
         $user = Role::create(['name' => 'user']);
         $user->givePermissionTo([
-            'view posts',
-            'view products'
+            'view bookings',
+            'create bookings'
         ]);
 
         // ========== BUAT USER DEMO ==========
