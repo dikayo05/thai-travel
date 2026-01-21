@@ -11,6 +11,8 @@ use App\Http\Controllers\BookingController;
 // Admin Controllers
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\BookingController as AdminBookingController;
+use App\Http\Controllers\Admin\CustomerController as AdminCustomerController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
@@ -45,6 +47,14 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     Route::get('/bookings', [AdminBookingController::class, 'index'])->name('bookings.index');
     Route::get('/bookings/{id}', [AdminBookingController::class, 'show'])->name('bookings.show');
     Route::put('/bookings/{id}', [AdminBookingController::class, 'update'])->name('bookings.update');
+
+    // Products (Cars & Tours)
+    Route::resource('products', AdminProductController::class);
+
+    // Customers
+    Route::resource('customers', AdminCustomerController::class)->parameters([
+        'customers' => 'user'
+    ]);
 });
 
 require __DIR__ . '/auth.php';
