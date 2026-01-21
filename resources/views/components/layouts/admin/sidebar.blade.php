@@ -36,8 +36,8 @@
         <div class="border-t border-gray-700 my-4"></div>
         <p class="px-4 text-xs font-semibold text-gray-400 uppercase mb-2">Management</p>
 
-        <a href="#"
-            class="flex items-center px-4 py-2 text-gray-200 rounded-md hover:bg-gray-700 hover:text-white transition">
+        <a href="{{ route('admin.products.index') }}"
+            class="flex items-center px-4 py-2 text-gray-200 rounded-md hover:bg-gray-700 hover:text-white transition {{ request()->routeIs('admin.products*') ? 'bg-teal-700 text-white' : '' }}">
             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
@@ -46,8 +46,8 @@
             Cars & Tours
         </a>
 
-        <a href="#"
-            class="flex items-center px-4 py-2 text-gray-200 rounded-md hover:bg-gray-700 hover:text-white transition">
+        <a href="{{ route('admin.customers.index') }}"
+            class="flex items-center px-4 py-2 text-gray-200 rounded-md hover:bg-gray-700 hover:text-white transition {{ request()->routeIs('admin.customers*') ? 'bg-teal-700 text-white' : '' }}">
             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
