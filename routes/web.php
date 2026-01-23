@@ -18,6 +18,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::get('/faq', [FaqController::class, 'index'])->name('faq');
 Route::get('/terms', [TermsController::class, 'index'])->name('terms');
+Route::view('/cars', 'cars')->name('cars');
+Route::view('/tours', 'tours')->name('tours');
+Route::view('/membership', 'membership')->name('membership');
 
 // Search Routes (Public)
 Route::get('/search/cars', [HomeController::class, 'searchCars'])->name('search.cars');
