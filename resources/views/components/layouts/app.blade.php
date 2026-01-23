@@ -6,6 +6,7 @@
 <body
     class="font-sans antialiased text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-900 transition-colors duration-300"
     x-data="{
+        mobileMenuOpen: false,
         darkMode: localStorage.getItem('theme') === 'dark',
         toggleTheme() {
             this.darkMode = !this.darkMode;

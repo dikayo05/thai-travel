@@ -1,4 +1,4 @@
-<nav x-data="{ mobileMenuOpen: false }"
+<nav
     class="sticky w-full z-50 transition-all duration-300 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-sm border-b border-gray-200 dark:border-gray-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16 items-center">
@@ -8,9 +8,10 @@
             </a>
 
             <div class="hidden md:flex space-x-8 items-center">
-                <a href="#" class="hover:text-primary dark:hover:text-teal-400 transition">Cars</a>
-                <a href="#" class="hover:text-primary dark:hover:text-teal-400 transition">Tours</a>
-                <a href="#" class="hover:text-primary dark:hover:text-teal-400 transition">Membership</a>
+                <a href="{{ route('cars') }}" class="hover:text-primary dark:hover:text-teal-400 transition">Cars</a>
+                <a href="{{ route('tours') }}" class="hover:text-primary dark:hover:text-teal-400 transition">Tours</a>
+                <a href="{{ route('membership') }}"
+                    class="hover:text-primary dark:hover:text-teal-400 transition">Membership</a>
 
                 <button @click="toggleTheme()"
                     class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition">
@@ -117,11 +118,11 @@
             x-transition:leave-end="opacity-0 transform -translate-y-2" @click.away="mobileMenuOpen = false" x-cloak
             class="md:hidden border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="#"
+                <a href="{{ route('cars') }}"
                     class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary dark:hover:text-teal-400 transition">Cars</a>
-                <a href="#"
+                <a href="{{ route('tours') }}"
                     class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary dark:hover:text-teal-400 transition">Tours</a>
-                <a href="#"
+                <a href="{{ route('membership') }}"
                     class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary dark:hover:text-teal-400 transition">Membership</a>
 
                 @auth
