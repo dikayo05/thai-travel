@@ -5,6 +5,15 @@
 
     <title>{{ config('app.name', 'Thai Travel') }}</title>
 
+    <!-- Dark Mode Script - Must be before any content to prevent flash -->
+    <script>
+        // Immediately check and apply dark mode before page renders
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia(
+                '(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
