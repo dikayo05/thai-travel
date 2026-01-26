@@ -5,27 +5,34 @@
             class="px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700">Create Product</a>
     </div>
 
-    <form method="GET" class="mb-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div>
-            <label class="block text-sm font-medium mb-1">Type</label>
-            <select name="type" class="w-full border rounded px-3 py-2">
-                <option value="">All</option>
-                <option value="car" @selected(request('type') === 'car')>Car</option>
-                <option value="tour" @selected(request('type') === 'tour')>Tour</option>
-            </select>
-        </div>
-        <div>
-            <label class="block text-sm font-medium mb-1">Active</label>
-            <select name="active" class="w-full border rounded px-3 py-2">
-                <option value="">All</option>
-                <option value="1" @selected(request('active') === '1')>Active</option>
-                <option value="0" @selected(request('active') === '0')>Inactive</option>
-            </select>
-        </div>
-        <div class="flex items-end">
-            <button class="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-900">Filter</button>
-        </div>
-    </form>
+    <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm mb-6">
+        <form method="GET" class="flex flex-col md:flex-row gap-4">
+            <div class="w-full md:w-1/4">
+                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Type</label>
+                <select name="type"
+                    class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-teal-500 focus:border-teal-500 text-sm">
+                    <option value="">All</option>
+                    <option value="car" @selected(request('type') === 'car')>Car</option>
+                    <option value="tour" @selected(request('type') === 'tour')>Tour</option>
+                </select>
+            </div>
+            <div class="w-full md:w-1/4">
+                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Active</label>
+                <select name="active"
+                    class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-teal-500 focus:border-teal-500 text-sm">
+                    <option value="">All</option>
+                    <option value="1" @selected(request('active') === '1')>Active</option>
+                    <option value="0" @selected(request('active') === '0')>Inactive</option>
+                </select>
+            </div>
+            <div class="w-full md:w-auto flex items-end gap-2">
+                <button type="submit"
+                    class="px-4 py-2 text-sm bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition">Filter</button>
+                <a href="{{ route('admin.products.index') }}"
+                    class="px-4 py-2 text-sm text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition">Reset</a>
+            </div>
+        </form>
+    </div>
 
     <div class="bg-white dark:bg-gray-800 shadow rounded overflow-hidden">
         <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
