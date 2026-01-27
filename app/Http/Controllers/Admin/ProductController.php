@@ -51,7 +51,7 @@ class ProductController extends Controller
 
         $product = Product::create($validated);
 
-        return redirect()->route('admin.products.edit', $product)->with('status', 'Product created');
+        return redirect()->route('admin.products.index', $product)->with('status', 'Product created');
     }
 
     public function edit(Product $product)
