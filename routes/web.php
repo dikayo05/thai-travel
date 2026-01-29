@@ -13,7 +13,16 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\BookingController as AdminBookingController;
 use App\Http\Controllers\Admin\CustomerController as AdminCustomerController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use Laravel\Socialite\Socialite;
+use App\Http\Controllers\Auth\GoogleController;
 
+require __DIR__ . '/auth.php';
+
+// Google OAuth Routes
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+
+// Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::get('/faq', [FaqController::class, 'index'])->name('faq');
@@ -59,5 +68,3 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
         'customers' => 'user'
     ]);
 });
-
-require __DIR__ . '/auth.php';
