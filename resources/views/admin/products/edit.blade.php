@@ -3,7 +3,7 @@
         <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Edit Product</h1>
     </div>
 
-    <form action="{{ route('admin.products.update', $product) }}" method="POST"
+    <form action="{{ route('admin.products.update', $product) }}" method="POST" enctype="multipart/form-data"
         class="space-y-6 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
         @csrf
         @method('PUT')
@@ -72,9 +72,27 @@
         </div>
 
         <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Image URL</label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Image</label>
+            @if ($product->image_url)
+                <div class="mb-3">
+                    <img src="{{ asset('storage/' . $product->image_url) }}" alt="{{ $product->name }}"
+                        class="max-h-48 rounded-lg object-cover">
+                </div>
+            @endif
+            <input type="file" name="image" accept="image/*"
+                class="w-full rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-teal-500 focus:border-teal-500 p-2">
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Supported formats: JPEG, PNG, JPG, GIF, WebP. Max
+                size: 5MB</p>
+            @error('image')
+                <p class="text-red-600 dark:text-red-400 text-sm mt-1">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Or Image URL</label>
             <input type="url" name="image_url" value="{{ old('image_url', $product->image_url) }}"
                 class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-teal-500 focus:border-teal-500">
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Leave empty if uploading image file</p>
             @error('image_url')
                 <p class="text-red-600 dark:text-red-400 text-sm mt-1">{{ $message }}</p>
             @enderror
