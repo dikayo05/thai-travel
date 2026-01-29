@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
@@ -36,6 +37,7 @@ class ProductController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'type' => ['required', 'in:car,tour'],
             'description' => ['nullable', 'string'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
             'image_url' => ['nullable', 'url'],
             'base_price' => ['required', 'numeric', 'min:0'],
             'discounted_price' => ['nullable', 'numeric', 'min:0'],
@@ -48,6 +50,11 @@ class ProductController extends Controller
         $validated['currency'] = $validated['currency'] ?? 'THB';
         $validated['is_active'] = (bool) ($validated['is_active'] ?? false);
         $validated['is_featured'] = (bool) ($validated['is_featured'] ?? false);
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $validated['image_url'] = $request->file('image')->store('products', 'public');
+        }
 
         $product = Product::create($validated);
 
@@ -70,6 +77,7 @@ class ProductController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'type' => ['required', 'in:car,tour'],
             'description' => ['nullable', 'string'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
             'image_url' => ['nullable', 'url'],
             'base_price' => ['required', 'numeric', 'min:0'],
             'discounted_price' => ['nullable', 'numeric', 'min:0'],
@@ -82,6 +90,15 @@ class ProductController extends Controller
         $validated['currency'] = $validated['currency'] ?? $product->currency ?? 'THB';
         $validated['is_active'] = (bool) ($validated['is_active'] ?? false);
         $validated['is_featured'] = (bool) ($validated['is_featured'] ?? false);
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($product->image_url && Storage::disk('public')->exists($product->image_url)) {
+                Storage::disk('public')->delete($product->image_url);
+            }
+            $validated['image_url'] = $request->file('image')->store('products', 'public');
+        }
 
         $product->update($validated);
 
