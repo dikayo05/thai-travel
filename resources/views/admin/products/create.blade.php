@@ -70,10 +70,11 @@
 
         <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Image</label>
-            <input type="file" name="image" accept="image/*"
+            <input type="file" name="image" accept="image/*" id="imageInput"
                 class="w-full rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-teal-500 focus:border-teal-500 p-2">
             <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Supported formats: JPEG, PNG, JPG, GIF, WebP. Max
                 size: 5MB</p>
+            <div id="imagePreview" class="mt-3"></div>
             @error('image')
                 <p class="text-red-600 dark:text-red-400 text-sm mt-1">{{ $message }}</p>
             @enderror
@@ -81,9 +82,10 @@
 
         <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Or Image URL</label>
-            <input type="url" name="image_url" value="{{ old('image_url') }}"
+            <input type="url" name="image_url" value="{{ old('image_url') }}" id="imageUrl"
                 class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-teal-500 focus:border-teal-500">
             <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Leave empty if uploading image file</p>
+            <div id="urlPreview" class="mt-3"></div>
             @error('image_url')
                 <p class="text-red-600 dark:text-red-400 text-sm mt-1">{{ $message }}</p>
             @enderror
@@ -112,3 +114,44 @@
         </div>
     </form>
 </x-layouts.admin.app>
+
+<script>
+    const imageInput = document.getElementById('imageInput');
+    const imageUrl = document.getElementById('imageUrl');
+    const imagePreview = document.getElementById('imagePreview');
+    const urlPreview = document.getElementById('urlPreview');
+
+    // Preview untuk file upload
+    imageInput.addEventListener('change', function(e) {
+        imagePreview.innerHTML = '';
+        urlPreview.innerHTML = '';
+
+        if (this.files && this.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imagePreview.innerHTML =
+                    `<img src="${e.target.result}" alt="Preview" class="max-h-48 rounded-lg object-cover">`;
+            };
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+
+    // Preview untuk URL
+    imageUrl.addEventListener('input', function(e) {
+        urlPreview.innerHTML = '';
+        imagePreview.innerHTML = '';
+
+        if (this.value.trim()) {
+            const img = new Image();
+            img.onload = function() {
+                urlPreview.innerHTML =
+                    `<img src="${imageUrl.value}" alt="Preview" class="max-h-48 rounded-lg object-cover">`;
+            };
+            img.onerror = function() {
+                urlPreview.innerHTML =
+                    `<p class="text-red-600 dark:text-red-400 text-sm">URL gambar tidak valid</p>`;
+            };
+            img.src = this.value;
+        }
+    });
+</script>
