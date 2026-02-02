@@ -26,6 +26,10 @@ class RolePermissionSeeder extends Seeder
             'edit users',
             'delete users',
 
+            // Profile
+            'view profile',
+            'edit profile',
+
             // Booking Management
             'view bookings',
             'create bookings',
@@ -49,16 +53,17 @@ class RolePermissionSeeder extends Seeder
         // Role: User (basic)
         $user = Role::firstOrCreate(['name' => 'user']);
         $user->syncPermissions([
+            'edit profile',
             'view bookings',
-            'create bookings'
+            'create bookings',
         ]);
 
         // Role: Admin (semua akses)
         $admin = Role::firstOrCreate(['name' => 'admin']);
-        // $admin->syncPermissions(Permission::all());
-        $admin->syncPermissions([
-            'view bookings',
-        ]);
+        $admin->syncPermissions(Permission::all());
+        // $admin->syncPermissions([
+        //     'view bookings',
+        // ]);
 
         // Role: Operational Staff
         $ops = Role::firstOrCreate(['name' => 'ops']);
