@@ -61,9 +61,6 @@ class RolePermissionSeeder extends Seeder
         // Role: Admin (semua akses)
         $admin = Role::firstOrCreate(['name' => 'admin']);
         $admin->syncPermissions(Permission::all());
-        // $admin->syncPermissions([
-        //     'view bookings',
-        // ]);
 
         // Role: Operational Staff
         $ops = Role::firstOrCreate(['name' => 'ops']);
