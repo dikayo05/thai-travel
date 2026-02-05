@@ -77,4 +77,5 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     // Support Chat
     Route::get('/support/chat', [AdminSupportChatController::class, 'index'])->name('support.chat');
     Route::post('/support/chat/message', [AdminSupportChatController::class, 'store'])->name('support.chat.message');
+    Route::delete('/support/chat/{conversation}', [AdminSupportChatController::class, 'destroy'])->name('support.chat.destroy');
 });

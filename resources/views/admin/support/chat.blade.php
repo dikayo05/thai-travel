@@ -16,7 +16,9 @@
                             </div>
                             <span class="text-xs text-gray-400">#{{ $item->id }}</span>
                         </div>
-                        <div class="text-xs text-gray-500 mt-1">Status: {{ ucfirst($item->status) }}</div>
+                        <div class="mt-2">
+                            <span class="text-xs text-gray-500">Status: {{ ucfirst($item->status) }}</span>
+                        </div>
                     </a>
                 @empty
                     <div class="text-sm text-gray-500">No conversations yet.</div>
@@ -32,13 +34,22 @@
                 postUrl: '{{ route('admin.support.chat.message') }}',
                 csrf: '{{ csrf_token() }}'
             })">
-            <div class="border-b border-gray-200 dark:border-gray-700 p-6">
-                <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Support Chat</h1>
+            <div class="border-b border-gray-200 dark:border-gray-700 p-6 flex items-start justify-between gap-4">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Support Chat</h1>
+                    @if ($conversation)
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Chatting with
+                            {{ $conversation->user?->name ?? 'User' }}</p>
+                    @else
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Select a conversation to start.</p>
+                    @endif
+                </div>
+
                 @if ($conversation)
-                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Chatting with
-                        {{ $conversation->user?->name ?? 'User' }}</p>
-                @else
-                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Select a conversation to start.</p>
+                    <button type="button" @click="showDeleteConfirm = true"
+                        class="text-sm text-red-600 hover:text-red-700 font-semibold border border-red-200 hover:border-red-300 px-3 py-2 rounded-lg">
+                        Delete Conversation
+                    </button>
                 @endif
             </div>
 
@@ -74,6 +85,32 @@
                     </div>
                 </form>
             </div>
+
+            @if ($conversation)
+                <div x-cloak x-show="showDeleteConfirm" x-transition
+                    class="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-md p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Delete conversation?</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">
+                            This will permanently remove the conversation and all its messages.
+                        </p>
+                        <div class="mt-6 flex justify-end gap-3">
+                            <button type="button" @click="showDeleteConfirm = false"
+                                class="px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200">
+                                Cancel
+                            </button>
+                            <form method="POST" action="{{ route('admin.support.chat.destroy', $conversation) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold">
+                                    Yes, delete
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </section>
     </div>
 
@@ -87,6 +124,7 @@
                 csrf: config.csrf,
                 newMessage: '',
                 sending: false,
+                showDeleteConfirm: false,
                 init() {
                     if (this.conversationId && window.Echo) {
                         window.Echo.private(`support.chat.${this.conversationId}`)

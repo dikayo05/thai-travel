@@ -67,6 +67,15 @@ class SupportChatController extends Controller
         return back();
     }
 
+    public function destroy(SupportConversation $conversation)
+    {
+        $conversation->delete();
+
+        return redirect()
+            ->route('admin.support.chat')
+            ->with('status', 'Conversation deleted.');
+    }
+
     private function formatMessages(Collection $messages): array
     {
         return $messages->map(fn(SupportMessage $message) => $this->formatMessage($message))->all();
