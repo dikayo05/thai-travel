@@ -7,6 +7,8 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\TermsController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\SupportChatController;
+use App\Http\Controllers\Admin\SupportChatController as AdminSupportChatController;
 
 // Admin Controllers
 use App\Http\Controllers\Admin\DashboardController;
@@ -49,6 +51,10 @@ Route::middleware('auth', 'role:user')->group(function () {
     Route::get('/booking/payment/{id}', [BookingController::class, 'payment'])->name('booking.payment');
     Route::post('/booking/process/{id}', [BookingController::class, 'processPayment'])->name('booking.process');
     Route::get('/booking/success/{id}', [BookingController::class, 'success'])->name('booking.success');
+
+    // Support Chat
+    Route::get('/support/chat', [SupportChatController::class, 'index'])->name('support.chat');
+    Route::post('/support/chat/message', [SupportChatController::class, 'store'])->name('support.chat.message');
 });
 
 // Admin Routes
@@ -67,4 +73,8 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     Route::resource('customers', AdminCustomerController::class)->parameters([
         'customers' => 'user'
     ]);
+
+    // Support Chat
+    Route::get('/support/chat', [AdminSupportChatController::class, 'index'])->name('support.chat');
+    Route::post('/support/chat/message', [AdminSupportChatController::class, 'store'])->name('support.chat.message');
 });

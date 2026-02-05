@@ -36,6 +36,9 @@ class RolePermissionSeeder extends Seeder
             'edit bookings',
             'delete bookings',
 
+            // Support Chat
+            'access support chat',
+
             // Settings
             'manage settings',
             'view reports',
@@ -56,6 +59,7 @@ class RolePermissionSeeder extends Seeder
             'edit profile',
             'view bookings',
             'create bookings',
+            'access support chat',
         ]);
 
         // Role: Admin (semua akses)
