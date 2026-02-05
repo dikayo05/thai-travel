@@ -256,4 +256,164 @@
             </div>
         </div>
     </section>
+
+    <div class="fixed bottom-6 right-6 z-50" x-data="floatingSupportChat()">
+        @auth
+            <button @click="toggle"
+                class="h-14 w-14 rounded-full bg-primary text-white shadow-xl flex items-center justify-center hover:bg-teal-700 transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8 10h8m-8 4h5m-6 6l-4-4H4a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z">
+                    </path>
+                </svg>
+            </button>
+
+            <div x-cloak x-show="open" x-transition
+                class="mt-4 w-[360px] max-w-[90vw] bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                    <div>
+                        <h3 class="text-sm font-semibold text-gray-900 dark:text-white">Support Chat</h3>
+                        <p class="text-xs text-gray-500">Online now</p>
+                    </div>
+                    <button @click="toggle" class="text-gray-400 hover:text-gray-600">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="p-4">
+                    <div class="h-64 overflow-y-auto space-y-3 pr-1" x-ref="messages">
+                        <template x-for="message in messages" :key="message.id">
+                            <div class="flex"
+                                :class="message.user.id === currentUserId ? 'justify-end' : 'justify-start'">
+                                <div class="max-w-[80%] rounded-2xl px-3 py-2"
+                                    :class="message.user.id === currentUserId ? 'bg-primary text-white' :
+                                        'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100'">
+                                    <div class="text-[10px] opacity-80 mb-1" x-text="message.user.name"></div>
+                                    <div class="text-sm whitespace-pre-line" x-text="message.body"></div>
+                                </div>
+                            </div>
+                        </template>
+
+                        <template x-if="loading">
+                            <div class="text-xs text-gray-500">Loading...</div>
+                        </template>
+                    </div>
+
+                    <form class="mt-4" @submit.prevent="send">
+                        <div class="flex items-center gap-2">
+                            <textarea x-model="newMessage" rows="2" placeholder="Type your message..."
+                                class="flex-1 rounded-xl border-gray-300 dark:border-gray-600 dark:bg-gray-900 focus:ring-primary focus:border-primary"></textarea>
+                            <button type="submit"
+                                class="bg-primary hover:bg-teal-700 text-white font-semibold px-4 py-2 rounded-xl shadow"
+                                :disabled="sending || newMessage.trim().length === 0">
+                                <span x-show="!sending">Send</span>
+                                <span x-show="sending">...</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        @else
+            <a href="{{ route('login') }}"
+                class="h-14 w-14 rounded-full bg-primary text-white shadow-xl flex items-center justify-center hover:bg-teal-700 transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8 10h8m-8 4h5m-6 6l-4-4H4a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z">
+                    </path>
+                </svg>
+            </a>
+        @endauth
+    </div>
+
+    @auth
+        <script>
+            document.addEventListener('alpine:init', () => {
+                Alpine.data('floatingSupportChat', () => ({
+                    open: false,
+                    loading: false,
+                    sending: false,
+                    conversationId: null,
+                    currentUserId: {{ auth()->id() }},
+                    messages: [],
+                    newMessage: '',
+                    toggle() {
+                        this.open = !this.open;
+                        if (this.open && !this.conversationId) {
+                            this.load();
+                        }
+                        this.$nextTick(() => this.scrollToBottom());
+                    },
+                    async load() {
+                        this.loading = true;
+
+                        try {
+                            const response = await fetch('{{ route('support.chat') }}', {
+                                headers: {
+                                    'Accept': 'application/json',
+                                }
+                            });
+
+                            if (response.ok) {
+                                const data = await response.json();
+                                this.conversationId = data?.conversation?.id ?? null;
+                                this.messages = data?.messages ?? [];
+
+                                if (this.conversationId && window.Echo) {
+                                    window.Echo.private(`support.chat.${this.conversationId}`)
+                                        .listen('.support.message', (payload) => {
+                                            if (payload?.message) {
+                                                this.messages.push(payload.message);
+                                                this.$nextTick(() => this.scrollToBottom());
+                                            }
+                                        });
+                                }
+                            }
+                        } finally {
+                            this.loading = false;
+                            this.$nextTick(() => this.scrollToBottom());
+                        }
+                    },
+                    async send() {
+                        const body = this.newMessage.trim();
+                        if (!body || this.sending) return;
+
+                        this.sending = true;
+
+                        try {
+                            const response = await fetch('{{ route('support.chat.message') }}', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                    'Accept': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    body
+                                }),
+                            });
+
+                            if (response.ok) {
+                                const data = await response.json();
+                                if (data?.message) {
+                                    this.messages.push(data.message);
+                                    this.newMessage = '';
+                                    this.$nextTick(() => this.scrollToBottom());
+                                }
+                            }
+                        } finally {
+                            this.sending = false;
+                        }
+                    },
+                    scrollToBottom() {
+                        if (this.$refs.messages) {
+                            this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
+                        }
+                    }
+                }));
+            });
+        </script>
+    @endauth
 </x-layouts.app>

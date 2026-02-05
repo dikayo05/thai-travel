@@ -25,9 +25,22 @@ class SupportChatController extends Controller
             ->orderBy('created_at')
             ->get();
 
+        $payload = [
+            'conversation' => [
+                'id' => $conversation->id,
+                'status' => $conversation->status,
+            ],
+            'messages' => $this->formatMessages($messages),
+            'currentUserId' => $user->id,
+        ];
+
+        if ($request->expectsJson()) {
+            return response()->json($payload);
+        }
+
         return view('support.chat', [
             'conversation' => $conversation,
-            'messages' => $this->formatMessages($messages),
+            'messages' => $payload['messages'],
             'currentUserId' => $user->id,
         ]);
     }
