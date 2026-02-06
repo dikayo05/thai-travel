@@ -4,10 +4,11 @@
             <div class="grid lg:grid-cols-2 gap-10 items-center">
                 <div>
                     <p class="text-sm uppercase tracking-wide text-primary font-semibold mb-2">Curated Experiences</p>
-                    <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Paket tour pilihan di
+                    <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Curated tour packages
+                        in
                         Thailand</h1>
-                    <p class="text-gray-600 dark:text-gray-300 mb-6">Dari street food Bangkok, island hopping Phuket,
-                        sampai hidden gems di Chiang Mai. Semua sudah termasuk transport & pemandu berlisensi.</p>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6">From Bangkok street food, Phuket island hopping,
+                        to hidden gems in Chiang Mai. All include transport and licensed guides.</p>
                     <div class="flex flex-wrap gap-3 mb-6">
                         <span class="px-3 py-2 bg-teal-50 text-primary rounded-full text-sm">Family friendly</span>
                         <span class="px-3 py-2 bg-teal-50 text-primary rounded-full text-sm">Private & small group</span>
@@ -15,16 +16,16 @@
                     </div>
                     <div class="flex flex-wrap gap-3">
                         <a href="{{ route('search.tours') }}"
-                            class="px-5 py-3 bg-primary text-white rounded-lg hover:bg-teal-700 transition">Jelajahi
-                            tour</a>
+                            class="px-5 py-3 bg-primary text-white rounded-lg hover:bg-teal-700 transition">Explore
+                            tours</a>
                         <a href="/contact"
-                            class="px-5 py-3 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-800 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 transition">Konsultasi
-                            gratis</a>
+                            class="px-5 py-3 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-800 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 transition">Free
+                            consultation</a>
                     </div>
                 </div>
                 <div
                     class="bg-gray-50 dark:bg-gray-800/70 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
-                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Destinasi populer</h2>
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Popular destinations</h2>
                     <div class="space-y-4">
                         <div class="flex items-start gap-4">
                             <div
@@ -52,7 +53,7 @@
                                 CM</div>
                             <div>
                                 <p class="font-semibold text-gray-900 dark:text-white">Chiang Mai</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-300">Elephant sanctuary etis, temple
+                                <p class="text-sm text-gray-600 dark:text-gray-300">Ethical elephant sanctuary, temple
                                     hopping, night market.</p>
                             </div>
                         </div>
@@ -64,25 +65,25 @@
 
     <section class="bg-gray-50 dark:bg-gray-900">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Kenapa tour bersama ThaiTravel?</h2>
+            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Why tour with ThaiTravel?</h2>
             <div class="grid md:grid-cols-3 gap-6">
                 <div
                     class="p-5 rounded-xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 shadow-sm">
-                    <p class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Pemandu berlisensi</p>
-                    <p class="text-gray-600 dark:text-gray-300 text-sm">Local guide tersertifikasi, fasih
-                        English/Indonesia (on request).</p>
+                    <p class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Licensed guides</p>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">Certified local guides, fluent in English and
+                        Indonesian (on request).</p>
                 </div>
                 <div
                     class="p-5 rounded-xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 shadow-sm">
-                    <p class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Itinerary fleksibel</p>
-                    <p class="text-gray-600 dark:text-gray-300 text-sm">Ganti spot wisata, atur durasi, atau tambah
-                        aktivitas dengan mudah.</p>
+                    <p class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Flexible itinerary</p>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">Swap attractions, adjust durations, or add
+                        activities with ease.</p>
                 </div>
                 <div
                     class="p-5 rounded-xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 shadow-sm">
-                    <p class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Semua terorganisir</p>
-                    <p class="text-gray-600 dark:text-gray-300 text-sm">Transport, tiket, dan makan (sesuai paket) sudah
-                        diurus; Anda tinggal jalan.</p>
+                    <p class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Everything organized</p>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">Transport, tickets, and meals (per package) are
+                        handled; you just enjoy the trip.</p>
                 </div>
             </div>
         </div>

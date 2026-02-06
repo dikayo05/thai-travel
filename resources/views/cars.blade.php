@@ -4,27 +4,27 @@
             <div class="grid lg:grid-cols-2 gap-10 items-center">
                 <div>
                     <p class="text-sm uppercase tracking-wide text-primary font-semibold mb-2">Premium Transfers</p>
-                    <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Sewa mobil & private
-                        driver di Thailand</h1>
-                    <p class="text-gray-600 dark:text-gray-300 mb-6">Armada berlisensi, sopir berpengalaman, harga
-                        transparan. Cocok untuk airport transfer, city tour, atau perjalanan bisnis.</p>
+                    <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Car rental & private
+                        driver in Thailand</h1>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6">Licensed fleet, experienced drivers, transparent
+                        pricing. Ideal for airport transfers, city tours, or business trips.</p>
                     <div class="flex flex-wrap gap-3 mb-6">
                         <span class="px-3 py-2 bg-teal-50 text-primary rounded-full text-sm">Airport transfer</span>
                         <span class="px-3 py-2 bg-teal-50 text-primary rounded-full text-sm">City ride</span>
-                        <span class="px-3 py-2 bg-teal-50 text-primary rounded-full text-sm">Charter 10 jam</span>
+                        <span class="px-3 py-2 bg-teal-50 text-primary rounded-full text-sm">10-hour charter</span>
                     </div>
                     <div class="flex flex-wrap gap-3">
                         <a href="{{ route('search.cars') }}"
-                            class="px-5 py-3 bg-primary text-white rounded-lg hover:bg-teal-700 transition">Lihat
-                            armada</a>
+                            class="px-5 py-3 bg-primary text-white rounded-lg hover:bg-teal-700 transition">View
+                            fleet</a>
                         <a href="/contact"
-                            class="px-5 py-3 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-800 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 transition">Butuh
-                            bantuan?</a>
+                            class="px-5 py-3 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-800 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 transition">Need
+                            help?</a>
                     </div>
                 </div>
                 <div
                     class="bg-gray-50 dark:bg-gray-800/70 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
-                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Pilihan kendaraan</h2>
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Vehicle options</h2>
                     <div class="space-y-4">
                         <div class="flex items-start gap-4">
                             <div
@@ -32,8 +32,8 @@
                                 S</div>
                             <div>
                                 <p class="font-semibold text-gray-900 dark:text-white">Sedan</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-300">2-3 penumpang, ideal untuk city ride
-                                    & airport transfer.</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-300">2-3 passengers, ideal for city rides
+                                    & airport transfers.</p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
@@ -42,8 +42,8 @@
                                 V</div>
                             <div>
                                 <p class="font-semibold text-gray-900 dark:text-white">MPV / Van</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-300">5-9 penumpang, cocok untuk keluarga
-                                    atau grup kecil.</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-300">5-9 passengers, great for families
+                                    or small groups.</p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
@@ -52,8 +52,8 @@
                                 L</div>
                             <div>
                                 <p class="font-semibold text-gray-900 dark:text-white">Luxury</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-300">Pilihan premium untuk tamu VIP dan
-                                    perjalanan bisnis.</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-300">Premium option for VIP guests and
+                                    business travel.</p>
                             </div>
                         </div>
                     </div>
@@ -64,25 +64,24 @@
 
     <section class="bg-gray-50 dark:bg-gray-900">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Mengapa pesan di ThaiTravel?</h2>
+            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Why book with ThaiTravel?</h2>
             <div class="grid md:grid-cols-3 gap-6">
                 <div
                     class="p-5 rounded-xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 shadow-sm">
-                    <p class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Sopir berlisensi</p>
-                    <p class="text-gray-600 dark:text-gray-300 text-sm">Sopir lokal berpengalaman dengan dukungan tim CS
-                        Indonesia/English 24/7.</p>
+                    <p class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Licensed drivers</p>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">Experienced local drivers with 24/7 Indonesian
+                        and English support.</p>
                 </div>
                 <div
                     class="p-5 rounded-xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 shadow-sm">
-                    <p class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Harga transparan</p>
-                    <p class="text-gray-600 dark:text-gray-300 text-sm">Semua biaya sudah termasuk tol, parkir standar,
-                        dan asuransi penumpang.</p>
+                    <p class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Transparent pricing</p>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">All fees include tolls, standard parking, and
+                        passenger insurance.</p>
                 </div>
                 <div
                     class="p-5 rounded-xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 shadow-sm">
-                    <p class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Gratis pembatalan</p>
-                    <p class="text-gray-600 dark:text-gray-300 text-sm">Batalkan gratis hingga 24 jam sebelum
-                        penjemputan.</p>
+                    <p class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Free cancellation</p>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">Cancel free up to 24 hours before pickup.</p>
                 </div>
             </div>
         </div>
