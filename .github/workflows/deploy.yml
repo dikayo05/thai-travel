@@ -1,0 +1,52 @@
+name: Auto Deploy to Plesk
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v4
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22 # Ganti kalau port SSH kakak bukan 22
+          script: |
+            # Masuk ke folder project (GANTI path ini sesuai server kakak!)
+            cd /var/www/vhosts/fts.biz.id/thai-travel.fts.biz.id
+
+            # Matikan mode maintenance (biar gak error pas deploy)
+            # php artisan down || true
+
+            # Tarik update terbaru dari git
+            git pull origin main
+
+            # Install dependencies PHP (Composer)
+            /opt/plesk/php/8.2/bin/php /usr/lib64/plesk-9.0/composer.phar install --no-interaction --prefer-dist --optimize-autoloader
+
+            # Install & Build Frontend (NPM)
+            # Pastikan nodejs & npm sudah terinstall di server, atau gunakan path lengkapnya
+            npm install
+            npm run build
+
+            # Database Migration (Optional - Uncomment kalau berani hehe)
+            # /opt/plesk/php/8.2/bin/php artisan migrate --force
+
+            # Bersih-bersih cache
+            /opt/plesk/php/8.2/bin/php artisan optimize:clear
+            /opt/plesk/php/8.2/bin/php artisan config:cache
+            /opt/plesk/php/8.2/bin/php artisan route:cache
+            /opt/plesk/php/8.2/bin/php artisan view:cache
+
+            # Nyalakan lagi
+            # php artisan up
+
+            echo "✅ DEPLOYMENT SUCCESSFUL ✅"
