@@ -4,7 +4,7 @@
 
             <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg p-8 md:p-12">
                 <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Terms of Service</h1>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mb-8">Last Updated: January 2026</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-8">Last Updated: February 2026</p>
 
                 <div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 space-y-6">
 
