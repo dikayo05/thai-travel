@@ -24,7 +24,7 @@
                         :class="activeTab === 'cars' ? 'border-primary text-primary dark:text-teal-400 border-b-2' :
                             'text-gray-500 hover:text-gray-700 dark:text-gray-400'"
                         class="w-1/2 py-4 text-center font-semibold transition bg-gray-50 dark:bg-gray-900 hover:bg-white dark:hover:bg-gray-800">
-                        🚗 Private Car / Transfer
+                        Private Car / Transfer
                     </button>
                     <button @click="activeTab = 'tours'"
                         :class="activeTab === 'tours' ? 'border-primary text-primary dark:text-teal-400 border-b-2' :
@@ -158,7 +158,8 @@
                     <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Trending Tours</h2>
                     <p class="text-gray-600 dark:text-gray-400 mt-2">Handpicked experiences for you</p>
                 </div>
-                <a href="#" class="text-primary font-semibold hover:underline">View All &rarr;</a>
+                <a href="{{ route('search.tours') }}" class="text-primary font-semibold hover:underline">View All
+                    &rarr;</a>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
