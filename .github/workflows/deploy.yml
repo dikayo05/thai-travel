@@ -1,35 +1,39 @@
-name: Auto Deploy Thai Travel
+name: Auto Deploy Thai Travel 🚀
 
 on:
   push:
     branches:
-      - main # Pastikan branch utama kakak 'main'
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Get latest code
+      - name: 🚚 Get latest code
         uses: actions/checkout@v4
 
-      - name: Deploy via SSH
+      # LANGKAH TAMBAHAN: Biar GitHub kenal server kakak & gak error Handshake
+      - name: 🔓 Add Server to Known Hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: 🚀 Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
+          script_stop: true # Berhenti kalau ada error di tengah jalan
           script: |
-            # 1. Masuk ke folder project Thai Travel
-            # GANTI PATH INI dengan yang benar-benar ada di File Manager
-            # Biasanya formatnya: /var/www/vhosts/domain-utama/subdomain-folder
+            # 1. Masuk ke folder project
             cd /var/www/vhosts/fts.biz.id/thai-travel.fts.biz.id
 
             # 2. Tarik kode terbaru
             git pull origin main
 
-            # 3. Install Dependencies PHP (Pakai PHP 8.3 buat Laravel 12)
-            # Kita pakai PHP 8.3 biar makin wuzz wuzz!
+            # 3. Install Dependencies PHP (Pakai PHP 8.3)
             /opt/plesk/php/8.3/bin/php /usr/lib64/plesk-9.0/composer.phar install --no-interaction --prefer-dist --optimize-autoloader
 
             # 4. Install & Build Frontend (Pakai Node 24)
@@ -37,7 +41,6 @@ jobs:
             /opt/plesk/node/24/bin/npm run build
 
             # 5. Database & Cache Cleaning
-            # Uncomment baris ini kalau mau auto-migrate database
             # /opt/plesk/php/8.3/bin/php artisan migrate --force
 
             /opt/plesk/php/8.3/bin/php artisan optimize:clear
@@ -45,7 +48,7 @@ jobs:
             /opt/plesk/php/8.3/bin/php artisan route:cache
             /opt/plesk/php/8.3/bin/php artisan view:cache
 
-            # 6. Pastikan permission folder storage aman
+            # 6. Fix Permission (Jaga-jaga)
             chmod -R 775 storage bootstrap/cache
 
-            echo "DEPLOYMENT THAI TRAVEL SUKSES!"
+            echo "✅ DEPLOYMENT SUKSES! KYAAA~! 🎉"
