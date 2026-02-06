@@ -110,21 +110,6 @@
                 </div>
             </div>
 
-            <!-- Features -->
-            <div class="mt-8 grid grid-cols-3 gap-4 text-center">
-                <div class="text-white">
-                    <div class="text-2xl mb-1">🚗</div>
-                    <div class="text-xs drop-shadow-md">Premium Cars</div>
-                </div>
-                <div class="text-white">
-                    <div class="text-2xl mb-1">🎯</div>
-                    <div class="text-xs drop-shadow-md">Best Tours</div>
-                </div>
-                <div class="text-white">
-                    <div class="text-2xl mb-1">⭐</div>
-                    <div class="text-xs drop-shadow-md">Earn Points</div>
-                </div>
-            </div>
         </div>
     </div>
 </x-layouts.guest>
