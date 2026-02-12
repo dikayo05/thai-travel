@@ -29,8 +29,14 @@ class Booking extends Model
         'quantity',
         'adult_pax',
         'child_pax',
+        'subtotal_price',
+        'discount_amount',
         'total_price',
         'currency',
+        'coupon_id',
+        'coupon_code',
+        'points_earned',
+        'reviewed_at',
         'status',
         'payment_status',
         'special_request',
@@ -43,6 +49,9 @@ class Booking extends Model
     protected $casts = [
         'service_date' => 'date',
         'total_price' => 'decimal:2',
+        'subtotal_price' => 'decimal:2',
+        'discount_amount' => 'decimal:2',
+        'reviewed_at' => 'datetime',
     ];
 
     /**
@@ -59,6 +68,16 @@ class Booking extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function coupon()
+    {
+        return $this->belongsTo(Coupon::class);
+    }
+
+    public function review()
+    {
+        return $this->hasOne(Review::class);
     }
 
     // Jika nanti ada tabel Products terpisah (Polymorphic relationship opsional)

@@ -18,11 +18,25 @@
                 <p class="text-2xl font-mono font-bold text-gray-900 dark:text-white">{{ $booking->booking_code }}</p>
             </div>
 
+            @if ($booking->points_earned > 0)
+                <div class="mb-6 text-sm text-gray-600 dark:text-gray-300">
+                    You earned <span
+                        class="font-semibold text-gray-900 dark:text-white">{{ $booking->points_earned }}</span>
+                    points from this booking.
+                </div>
+            @endif
+
             <div class="space-y-3">
                 <a href="#"
                     class="block w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 rounded-lg transition">
                     Download Voucher (PDF)
                 </a>
+                @if ($booking->payment_status === 'paid' && $booking->reviewed_at === null)
+                    <a href="{{ route('reviews.create', $booking) }}"
+                        class="block w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-bold py-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+                        Leave a Review
+                    </a>
+                @endif
                 <a href="/"
                     class="block w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-bold py-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition">
                     Back to Home

@@ -17,6 +17,11 @@
                         <a href="/contact"
                             class="px-5 py-3 bg-primary text-white rounded-lg hover:bg-teal-700 transition">Daftar
                             sekarang</a>
+                        @auth
+                            <a href="{{ route('membership.account') }}"
+                                class="px-5 py-3 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-800 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 transition">Membership
+                                dashboard</a>
+                        @endauth
                         <a href="/faq"
                             class="px-5 py-3 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-800 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 transition">Lihat
                             FAQ</a>

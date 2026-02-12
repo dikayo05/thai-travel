@@ -39,47 +39,69 @@
                     <div class="border-t border-gray-100 dark:border-gray-700 my-4"></div>
 
                     <div class="flex justify-between items-center">
+                        <span class="text-gray-500">Subtotal</span>
+                        <span class="font-medium text-gray-900 dark:text-white">THB
+                            {{ number_format($booking->subtotal_price ?: $booking->total_price) }}</span>
+                    </div>
+                    @if ($booking->discount_amount > 0)
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Discount</span>
+                            <span class="font-medium text-red-500">- THB
+                                {{ number_format($booking->discount_amount) }}</span>
+                        </div>
+                    @endif
+                    @if ($booking->coupon_code)
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">Coupon</span>
+                            <span class="font-medium text-gray-900 dark:text-white">{{ $booking->coupon_code }}</span>
+                        </div>
+                    @endif
+
+                    <div class="flex justify-between items-center pt-2">
                         <span class="text-lg font-bold text-gray-900 dark:text-white">Total Amount</span>
                         <span class="text-2xl font-bold text-teal-600">THB
                             {{ number_format($booking->total_price) }}</span>
                     </div>
+                    <div class="text-sm text-gray-500">Points to earn: <span
+                            class="font-semibold text-gray-900 dark:text-white">{{ $pointsToEarn }}</span></div>
                 </div>
             </div>
-
-            <div class="bg-white dark:bg-gray-800 shadow rounded-xl p-6 mb-8">
-                <h3 class="font-semibold text-gray-900 dark:text-white mb-4">Select Payment Method</h3>
-
-                <form action="{{ route('booking.process', $booking->id) }}" method="POST">
-                    @csrf
-                    <div class="space-y-3">
-                        <label
-                            class="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700">
-                            <input type="radio" name="payment_method" value="credit_card" checked
-                                class="h-4 w-4 text-teal-600 focus:ring-teal-500">
-                            <span class="ml-3 font-medium text-gray-900 dark:text-white">Credit / Debit Card
-                                (Stripe)</span>
-                        </label>
-                        <label
-                            class="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700">
-                            <input type="radio" name="payment_method" value="promptpay"
-                                class="h-4 w-4 text-teal-600 focus:ring-teal-500">
-                            <span class="ml-3 font-medium text-gray-900 dark:text-white">Thai QR Payment
-                                (PromptPay)</span>
-                        </label>
-                    </div>
-
-                    <button type="submit"
-                        class="mt-6 w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-4 rounded-lg shadow-lg transition">
-                        Pay Securely &rarr;
-                    </button>
-                </form>
-
-                <div class="mt-4 text-center">
-                    <a href="{{ route('booking.create') }}" class="text-sm text-gray-500 hover:underline">Cancel &
-                        Return</a>
-                </div>
-            </div>
-
         </div>
+
+        <div class="bg-white dark:bg-gray-800 shadow rounded-xl p-6 mb-8">
+            <h3 class="font-semibold text-gray-900 dark:text-white mb-4">Select Payment Method</h3>
+
+            <form action="{{ route('booking.process', $booking->id) }}" method="POST">
+                @csrf
+                <div class="space-y-3">
+                    <label
+                        class="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700">
+                        <input type="radio" name="payment_method" value="credit_card" checked
+                            class="h-4 w-4 text-teal-600 focus:ring-teal-500">
+                        <span class="ml-3 font-medium text-gray-900 dark:text-white">Credit / Debit Card
+                            (Stripe)</span>
+                    </label>
+                    <label
+                        class="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700">
+                        <input type="radio" name="payment_method" value="promptpay"
+                            class="h-4 w-4 text-teal-600 focus:ring-teal-500">
+                        <span class="ml-3 font-medium text-gray-900 dark:text-white">Thai QR Payment
+                            (PromptPay)</span>
+                    </label>
+                </div>
+
+                <button type="submit"
+                    class="mt-6 w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-4 rounded-lg shadow-lg transition">
+                    Pay Securely &rarr;
+                </button>
+            </form>
+
+            <div class="mt-4 text-center">
+                <a href="{{ route('booking.create') }}" class="text-sm text-gray-500 hover:underline">Cancel &
+                    Return</a>
+            </div>
+        </div>
+
+    </div>
     </div>
 </x-layouts.app>

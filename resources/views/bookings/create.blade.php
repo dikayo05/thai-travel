@@ -134,6 +134,17 @@
                                 <span class="text-gray-900 dark:text-white">x <span x-text="qty"></span></span>
                             </div>
 
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Coupon
+                                    Code</label>
+                                <input type="text" name="coupon_code" value="{{ old('coupon_code') }}"
+                                    class="mt-1 w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+                                    placeholder="MEMBER10">
+                                @error('coupon_code')
+                                    <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
                             <div
                                 class="pt-4 border-t border-gray-100 dark:border-gray-700 flex justify-between items-center mb-6">
                                 <span class="text-lg font-bold text-gray-900 dark:text-white">Total</span>

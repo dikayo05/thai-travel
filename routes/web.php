@@ -7,6 +7,8 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\TermsController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\MembershipController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SupportChatController;
 use App\Http\Controllers\Admin\SupportChatController as AdminSupportChatController;
 
@@ -39,11 +41,14 @@ Route::get('/search/tours', [HomeController::class, 'searchTours'])->name('searc
 
 // User Routes
 Route::middleware('auth', 'role:user')->group(function () {
+    Route::get('/membership/account', [MembershipController::class, 'index'])->name('membership.account');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Booking Routes
+    Route::get('/bookings', [BookingController::class, 'index'])->name('booking.index');
     Route::get('/booking/book', [BookingController::class, 'create'])->name('booking.create');
     Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
 
@@ -51,6 +56,10 @@ Route::middleware('auth', 'role:user')->group(function () {
     Route::get('/booking/payment/{id}', [BookingController::class, 'payment'])->name('booking.payment');
     Route::post('/booking/process/{id}', [BookingController::class, 'processPayment'])->name('booking.process');
     Route::get('/booking/success/{id}', [BookingController::class, 'success'])->name('booking.success');
+
+    // Reviews
+    Route::get('/bookings/{booking}/review', [ReviewController::class, 'create'])->name('reviews.create');
+    Route::post('/bookings/{booking}/review', [ReviewController::class, 'store'])->name('reviews.store');
 
     // Support Chat
     Route::get('/support/chat', [SupportChatController::class, 'index'])->name('support.chat');

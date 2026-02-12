@@ -39,6 +39,8 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'points_balance' => 300,
+            'lifetime_points' => 300,
         ]);
 
         $user->assignRole('user');
