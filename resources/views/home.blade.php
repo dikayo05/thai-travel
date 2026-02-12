@@ -164,55 +164,20 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-white dark:bg-gray-900 rounded-xl shadow-lg overflow-hidden group">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1508009603885-50cf7c579365?q=80&w=1949&auto=format&fit=crop"
-                            class="w-full h-full object-cover transition transform group-hover:scale-110"
-                            alt="Bangkok Temple">
-                        <div
-                            class="absolute top-2 right-2 bg-white/90 px-2 py-1 rounded text-xs font-bold text-gray-800">
-                            Day Tour</div>
+                @forelse ($trendingTours as $tour)
+                    <x-tour-card :image="$tour->image_url && str_starts_with($tour->image_url, 'http')
+                        ? $tour->image_url
+                        : ($tour->image_url
+                            ? asset('storage/' . $tour->image_url)
+                            : 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1949&auto=format&fit=crop')" :title="$tour->name" :badge="$tour->destination ? ucfirst($tour->destination) : 'Tour'" :rating="(int) round($tour->average_rating)"
+                        :reviews="(int) $tour->total_reviews" :duration="$tour->duration ? 'Duration: ' . $tour->duration : null" :price="$tour->currency . ' ' . number_format($tour->final_price)" :original-price="$tour->discounted_price
+                            ? $tour->currency . ' ' . number_format($tour->base_price)
+                            : null" />
+                @empty
+                    <div class="bg-white dark:bg-gray-900 rounded-xl shadow-lg overflow-hidden p-6 text-gray-500">
+                        No tours available right now.
                     </div>
-                    <div class="p-5">
-                        <div class="flex items-center space-x-1 text-yellow-400 text-sm mb-2">
-                            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span> <span
-                                class="text-gray-400 dark:text-gray-500">(120)</span>
-                        </div>
-                        <h3 class="text-lg font-bold mb-2 line-clamp-2 hover:text-primary cursor-pointer">Grand Palace
-                            &
-                            Emerald Buddha Tour</h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Duration: 4 Hours • English Guide</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-400 text-sm line-through">THB 1,500</span>
-                            <span class="text-xl font-bold text-primary">THB 1,200</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white dark:bg-gray-900 rounded-xl shadow-lg overflow-hidden group">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=1938&auto=format&fit=crop"
-                            class="w-full h-full object-cover transition transform group-hover:scale-110"
-                            alt="Elephant">
-                        <div
-                            class="absolute top-2 right-2 bg-white/90 px-2 py-1 rounded text-xs font-bold text-gray-800">
-                            Nature</div>
-                    </div>
-                    <div class="p-5">
-                        <div class="flex items-center space-x-1 text-yellow-400 text-sm mb-2">
-                            <span>★</span><span>★</span><span>★</span><span>★</span><span
-                                class="text-gray-300">★</span>
-                            <span class="text-gray-400 dark:text-gray-500">(85)</span>
-                        </div>
-                        <h3 class="text-lg font-bold mb-2 line-clamp-2 hover:text-primary cursor-pointer">Ethical
-                            Elephant
-                            Sanctuary Visit</h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Duration: 6 Hours • Lunch Included</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-xl font-bold text-primary">THB 2,500</span>
-                        </div>
-                    </div>
-                </div>
+                @endforelse
             </div>
         </div>
     </section>

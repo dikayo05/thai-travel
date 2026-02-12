@@ -12,7 +12,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $trendingTours = Product::tours()
+            ->orderBy('is_featured', 'desc')
+            ->orderBy('average_rating', 'desc')
+            ->take(4)
+            ->get();
+
+        return view('home', compact('trendingTours'));
     }
 
     /**
