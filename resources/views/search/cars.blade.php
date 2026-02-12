@@ -20,6 +20,37 @@
                         <span>{{ \Carbon\Carbon::parse($serviceDate)->format('d M Y') }}</span>
                     </div>
                 </div>
+                <form method="GET" action="{{ route('search.cars') }}"
+                    class="mt-5 grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Service Type</label>
+                        <select name="service_type"
+                            class="mt-1 w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700">
+                            <option value="airport_transfer" @selected($serviceType === 'airport_transfer')>Airport transfer</option>
+                            <option value="city_point_to_point" @selected($serviceType === 'city_point_to_point')>City point-to-point
+                            </option>
+                            <option value="hourly_charter" @selected($serviceType === 'hourly_charter')>Hourly charter</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Pickup
+                            Location</label>
+                        <input type="text" name="pickup_location" value="{{ $pickupLocation }}"
+                            class="mt-1 w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+                            placeholder="Hotel or airport">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Date</label>
+                        <input type="date" name="service_date" value="{{ $serviceDate }}"
+                            class="mt-1 w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700">
+                    </div>
+                    <div class="flex items-end">
+                        <button type="submit"
+                            class="w-full bg-primary hover:bg-teal-700 text-white font-bold py-2.5 rounded-lg transition">
+                            Update Filter
+                        </button>
+                    </div>
+                </form>
             </div>
 
             <!-- Car Options Grid -->
@@ -30,6 +61,17 @@
             @else
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach ($cars as $car)
+                        @php
+                            $serviceRates = [
+                                'airport_transfer' => 1,
+                                'city_point_to_point' => 1.15,
+                                'hourly_charter' => 0.35,
+                            ];
+                            $rate = $serviceRates[$serviceType] ?? 1;
+                            $basePrice = $car->discounted_price ?: $car->base_price;
+                            $servicePrice = $basePrice * $rate;
+                            $priceLabel = $serviceType === 'hourly_charter' ? 'per hour' : 'per trip';
+                        @endphp
                         <div
                             class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition">
                             <div
@@ -78,24 +120,16 @@
 
                                 <div class="border-t border-gray-200 dark:border-gray-700 pt-4 mb-4">
                                     <div class="flex justify-between items-center mb-2">
-                                        @if ($car->discounted_price)
-                                            <div>
-                                                <span class="text-gray-400 line-through text-sm">{{ $car->currency }}
-                                                    {{ number_format($car->base_price) }}</span>
-                                            </div>
-                                            <span
-                                                class="text-2xl font-bold text-primary dark:text-teal-400">{{ $car->currency }}
-                                                {{ number_format($car->discounted_price) }}</span>
-                                        @else
-                                            <span class="text-gray-600 dark:text-gray-400">Base Price</span>
-                                            <span
-                                                class="text-2xl font-bold text-primary dark:text-teal-400">{{ $car->currency }}
-                                                {{ number_format($car->base_price) }}</span>
-                                        @endif
+                                        <span
+                                            class="text-gray-600 dark:text-gray-400">{{ ucfirst(str_replace('_', ' ', $serviceType)) }}</span>
+                                        <span
+                                            class="text-2xl font-bold text-primary dark:text-teal-400">{{ $car->currency }}
+                                            {{ number_format($servicePrice) }}</span>
                                     </div>
+                                    <div class="text-xs text-gray-500">{{ $priceLabel }}</div>
                                 </div>
 
-                                <a href="{{ route('booking.create', ['type' => 'car', 'product' => $car->name, 'price' => $car->final_price, 'service_type' => $serviceType, 'pickup' => $pickupLocation, 'date' => $serviceDate]) }}"
+                                <a href="{{ route('booking.create', ['type' => 'car', 'product' => $car->name, 'price' => $car->final_price, 'car_service_type' => $serviceType, 'pickup' => $pickupLocation, 'date' => $serviceDate]) }}"
                                     class="block w-full bg-primary hover:bg-teal-700 text-white text-center font-bold py-3 rounded-lg transition">
                                     Book Now
                                 </a>

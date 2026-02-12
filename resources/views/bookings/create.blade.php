@@ -17,7 +17,25 @@
                 qty: 1,
                 price: {{ $basePrice }},
                 type: '{{ $serviceType }}',
-                get total() { return this.qty * this.price; }
+                carServiceType: '{{ $carServiceType }}',
+                charterHours: {{ $charterHours }},
+                rates: {
+                    airport_transfer: 1,
+                    city_point_to_point: 1.15,
+                    hourly_charter: 0.35
+                },
+                get unitPrice() {
+                    if (this.type !== 'car') {
+                        return this.price;
+                    }
+            
+                    const rate = this.rates[this.carServiceType] ?? 1;
+                    return this.price * rate;
+                },
+                get total() {
+                    const hours = this.carServiceType === 'hourly_charter' ? this.charterHours : 1;
+                    return this.unitPrice * this.qty * hours;
+                }
             }">
                 @csrf
 
@@ -63,18 +81,32 @@
                             <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Service Details</h2>
                             <div class="space-y-4">
 
+                                <div x-show="type === 'car'" class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Car
+                                            Service</label>
+                                        <select name="car_service_type" x-model="carServiceType"
+                                            class="mt-1 w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700">
+                                            <option value="airport_transfer">Airport transfer</option>
+                                            <option value="city_point_to_point">City point-to-point</option>
+                                            <option value="hourly_charter">Hourly charter</option>
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div class="grid grid-cols-2 gap-4">
                                     <div>
                                         <label
                                             class="block text-sm font-medium text-gray-700 dark:text-gray-300">Date</label>
                                         <input type="date" name="service_date"
+                                            value="{{ old('service_date', $serviceDate) }}"
                                             class="mt-1 w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700"
                                             required>
                                     </div>
                                     <div>
                                         <label
                                             class="block text-sm font-medium text-gray-700 dark:text-gray-300">Time</label>
-                                        <input type="time" name="service_time"
+                                        <input type="time" name="service_time" value="{{ old('service_time') }}"
                                             class="mt-1 w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700"
                                             required>
                                     </div>
@@ -93,7 +125,23 @@
                                             / Drop-off Details</label>
                                         <textarea name="pickup_location" rows="2"
                                             class="mt-1 w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                                            placeholder="Hotel name or Address"></textarea>
+                                            placeholder="Hotel name or Address">{{ old('pickup_location', $pickupLocation) }}</textarea>
+                                    </div>
+                                    <div x-show="carServiceType === 'city_point_to_point'">
+                                        <label
+                                            class="block text-sm font-medium text-gray-700 dark:text-gray-300">Drop-off
+                                            Location</label>
+                                        <textarea name="dropoff_location" rows="2"
+                                            class="mt-1 w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+                                            placeholder="Destination address">{{ old('dropoff_location', $dropoffLocation) }}</textarea>
+                                    </div>
+                                    <div x-show="carServiceType === 'hourly_charter'">
+                                        <label
+                                            class="block text-sm font-medium text-gray-700 dark:text-gray-300">Charter
+                                            Duration (hours)</label>
+                                        <input type="number" name="charter_hours" min="2" max="24"
+                                            x-model="charterHours" value="{{ old('charter_hours', $charterHours) }}"
+                                            class="mt-1 w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700">
                                     </div>
                                 </div>
 
@@ -127,7 +175,10 @@
 
                             <div class="flex justify-between mb-2 text-sm">
                                 <span class="text-gray-600 dark:text-gray-400">Price per unit</span>
-                                <span class="text-gray-900 dark:text-white">THB <span x-text="price"></span></span>
+                                <span class="text-gray-900 dark:text-white">THB <span
+                                        x-text="unitPrice.toFixed(0)"></span>
+                                    <span x-show="type === 'car' && carServiceType === 'hourly_charter'">/hr</span>
+                                </span>
                             </div>
                             <div class="flex justify-between mb-4 text-sm">
                                 <span class="text-gray-600 dark:text-gray-400">Quantity</span>

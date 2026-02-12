@@ -28,6 +28,53 @@
                         <span class="text-gray-500">Service</span>
                         <span class="font-medium text-gray-900 dark:text-white">{{ $booking->product_name }}</span>
                     </div>
+                    @if ($booking->service_type === 'car')
+                        @php
+                            $serviceLabels = [
+                                'airport_transfer' => 'Airport transfer',
+                                'city_point_to_point' => 'City point-to-point',
+                                'hourly_charter' => 'Hourly charter',
+                            ];
+                        @endphp
+                        <div
+                            class="bg-gray-50 dark:bg-gray-700/60 rounded-lg p-3 text-sm text-gray-600 dark:text-gray-300">
+                            <div class="flex justify-between">
+                                <span>Car service</span>
+                                <span class="font-medium text-gray-900 dark:text-white">
+                                    {{ $serviceLabels[$booking->car_service_type] ?? 'Car service' }}
+                                </span>
+                            </div>
+                            @if ($booking->pickup_location)
+                                <div class="flex justify-between">
+                                    <span>Pickup</span>
+                                    <span
+                                        class="font-medium text-gray-900 dark:text-white">{{ $booking->pickup_location }}</span>
+                                </div>
+                            @endif
+                            @if ($booking->dropoff_location)
+                                <div class="flex justify-between">
+                                    <span>Drop-off</span>
+                                    <span
+                                        class="font-medium text-gray-900 dark:text-white">{{ $booking->dropoff_location }}</span>
+                                </div>
+                            @endif
+                            @if ($booking->flight_number)
+                                <div class="flex justify-between">
+                                    <span>Flight</span>
+                                    <span
+                                        class="font-medium text-gray-900 dark:text-white">{{ $booking->flight_number }}</span>
+                                </div>
+                            @endif
+                            @if ($booking->charter_hours)
+                                <div class="flex justify-between">
+                                    <span>Charter hours</span>
+                                    <span
+                                        class="font-medium text-gray-900 dark:text-white">{{ $booking->charter_hours }}
+                                        hours</span>
+                                </div>
+                            @endif
+                        </div>
+                    @endif
                     <div class="flex justify-between">
                         <span class="text-gray-500">Date & Time</span>
                         <span class="font-medium text-gray-900 dark:text-white">

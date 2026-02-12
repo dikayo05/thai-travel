@@ -13,6 +13,11 @@ use Illuminate\Http\Request;
 class BookingController extends Controller
 {
     private const POINTS_RATE = 0.01;
+    private const CAR_SERVICE_RATES = [
+        'airport_transfer' => 1.0,
+        'city_point_to_point' => 1.15,
+        'hourly_charter' => 0.35,
+    ];
 
     /**
      * Display a listing of the resource.
@@ -35,8 +40,22 @@ class BookingController extends Controller
         $serviceType = $request->query('type', 'car');
         $productName = $request->query('product', 'Standard Sedan');
         $basePrice   = $request->query('price', 1000);
+        $carServiceType = $request->query('car_service_type', 'airport_transfer');
+        $pickupLocation = $request->query('pickup', '');
+        $dropoffLocation = $request->query('dropoff', '');
+        $serviceDate = $request->query('date', '');
+        $charterHours = $request->query('charter_hours', 4);
 
-        return view('bookings.create', compact('serviceType', 'productName', 'basePrice'));
+        return view('bookings.create', compact(
+            'serviceType',
+            'productName',
+            'basePrice',
+            'carServiceType',
+            'pickupLocation',
+            'dropoffLocation',
+            'serviceDate',
+            'charterHours'
+        ));
     }
 
     /**
@@ -51,12 +70,21 @@ class BookingController extends Controller
             'service_date' => 'required|date|after_or_equal:today',
             'quantity' => 'required|integer|min:1',
             // Validasi kondisional (Car vs Tour)
-            'flight_number' => 'nullable|required_if:service_type,car',
+            'car_service_type' => 'nullable|required_if:service_type,car|in:airport_transfer,city_point_to_point,hourly_charter',
+            'flight_number' => 'nullable|required_if:car_service_type,airport_transfer',
+            'pickup_location' => 'nullable|required_if:service_type,car',
+            'dropoff_location' => 'nullable|required_if:car_service_type,city_point_to_point',
+            'charter_hours' => 'nullable|required_if:car_service_type,hourly_charter|integer|min:2|max:24',
             'adult_pax' => 'nullable|integer',
             'coupon_code' => 'nullable|string|max:40',
         ]);
 
-        $subtotal = $request->base_price * $request->quantity;
+        $basePrice = (float) $request->base_price;
+        $unitPrice = $this->getCarServiceUnitPrice($basePrice, $request->car_service_type);
+        $hours = $request->car_service_type === 'hourly_charter'
+            ? max(1, (int) $request->charter_hours)
+            : 1;
+        $subtotal = $unitPrice * $request->quantity * $hours;
         $user = $request->user();
         $coupon = null;
         $discount = 0;
@@ -87,13 +115,16 @@ class BookingController extends Controller
             'guest_phone' => $request->guest_phone,
 
             'service_type' => $request->service_type,
+            'car_service_type' => $request->car_service_type,
             'product_name' => $request->product_name,
             'product_id' => 0, // Placeholder jika belum ada tabel Product
 
             'service_date' => $request->service_date,
             'service_time' => $request->service_time,
             'pickup_location' => $request->pickup_location,
+            'dropoff_location' => $request->dropoff_location,
             'flight_number' => $request->flight_number,
+            'charter_hours' => $request->charter_hours,
 
             'quantity' => $request->quantity,
             'subtotal_price' => $subtotal,
@@ -175,6 +206,13 @@ class BookingController extends Controller
     private function calculatePoints(float $amount): int
     {
         return (int) floor($amount * self::POINTS_RATE);
+    }
+
+    private function getCarServiceUnitPrice(float $basePrice, ?string $carServiceType): float
+    {
+        $rate = self::CAR_SERVICE_RATES[$carServiceType ?? 'airport_transfer'] ?? 1.0;
+
+        return $basePrice * $rate;
     }
 
     private function validateCoupon(Coupon $coupon, int $userId, float $subtotal): ?string

@@ -46,7 +46,8 @@
                             <select name="service_type"
                                 class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:ring-primary focus:border-primary">
                                 <option value="airport_transfer">Airport Transfer</option>
-                                <option value="city_rental">City Rental (Hourly)</option>
+                                <option value="city_point_to_point">City point-to-point</option>
+                                <option value="hourly_charter">Hourly charter</option>
                             </select>
                         </div>
                         <div class="md:col-span-1">
